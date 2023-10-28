@@ -2,6 +2,7 @@ from weather import get_weather
 
 import os
 import telebot
+from loguru import logger
 
 
 def telegram_bot():
@@ -22,8 +23,11 @@ def telegram_bot():
     def weather(message):
 
         city = message.text
+        logger.info(f"Бот получил запрос с текстом: {city}")
+
         forecast = get_weather(city=city)
 
         bot.send_message(message.from_user.id, forecast)
+        logger.info(f"Бот отправил ответ по запросу: {city}")
 
     return bot

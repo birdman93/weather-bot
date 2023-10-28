@@ -1,7 +1,11 @@
 import os
 import requests
 from datetime import datetime
+from loguru import logger
 
+
+# Настройка логирования в файл "app.log" с уровнем INFO
+logger.add("app.log", level="INFO")
 
 def get_weather(city: str = None):
 
@@ -15,11 +19,14 @@ def get_weather(city: str = None):
 
     # Отправляем запрос
     response = requests.get(url=url)
+    logger.info(f"Запрос погоды для города: {city}")
 
     if response.status_code != 200:
         result = 'Указанный город не найден'
+        logger.error(f'Указанный в запросе город ({city}) не найден')
     else:
         response = response.json()
+        logger.info(f"Получен ответ на запрос для города: {city}")
 
         # Вычисляем временные переменные
         sunrise = datetime.fromtimestamp(response['sys']['sunrise'] + response['timezone'])
