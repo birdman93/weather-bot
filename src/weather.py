@@ -16,14 +16,14 @@ def get_weather(city: str = None):
 
     # Отправляем запрос
     response = requests.get(url=url)
-    logger.info(f"{datetime.now()}: Запрос погоды для города: {city}")
+    logger.info(f"Запрос погоды для города: {city}")
 
     if response.status_code != 200:
         result = 'Указанный город не найден'
-        logger.error(f'{datetime.now()}: Указанный в запросе город ({city}) не найден')
+        logger.error(f'Указанный в запросе город ({city}) не найден')
     else:
         response = response.json()
-        logger.info(f"{datetime.now()}: Получен ответ на запрос для города: {city}")
+        logger.info(f"Получен ответ на запрос для города: {city}")
 
         # Вычисляем временные переменные
         sunrise = datetime.fromtimestamp(response['sys']['sunrise'] + response['timezone'])
